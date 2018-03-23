@@ -19,21 +19,61 @@
 
 <form name="estilo">
     <table>
+    <thead>
+        <th>Estilo de Aprendizaje</th>
+        <th>Promedio de Matricula</th>
+        <th>Sexo</th>
+    </thead>
         <tbody>
             <tr>
-                <td style="width: 100%;">
-                    <select id="c1">
-                        <option value="acomodador">Acomodador</option>
-                        <option value="convergente">Convergente</option>
-                        <option value="asimilador">Asimilador</option>
-                        <option value="Divergente">Divergente</option>
+                <td style='width:33%;'>
+                    <select id="form_two_style" style='width:100%;'>
+                        <option value="ACOMODADOR">Acomodador</option>
+                        <option value="CONVERGENTE">Convergente</option>
+                        <option value="ASIMILADOR">Asimilador</option>
+                        <option value="DIVERGENTE">Divergente</option>
+                    </select>
+                </td>
+
+                <td style='width:33%;'>
+                    <input id='form_two_average' style='width:100%;' type="text" required/>
+                </td>
+                <td style='width:33%;'>
+                    <select id="form_two_gender" style='width:100%;'>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
                     </select>
                 </td>
             </tr>
         </tbody>
     </table>
     <br>
-    <input value="Adivinar Recinto de Origen" type="button" id="form_input_calc"/>
-    <input type="text" id="form_input_result"/>
+    <br>
+    <input value="Adivinar Recinto de Origen" type="button" id="form_two_button"/>
+    <input type="text" id="form_two_result"/>
     <br>
 </form>
+
+<script>
+$('#form_two_button').click(function(){
+
+    var style = $('#form_two_style').val();
+    var average = parseInt($('#form_two_average').val());
+    var gender = $('#form_two_gender').val();
+
+    var args = {
+        'style': style,
+        'average': average,
+        'gender': gender
+    };
+
+    $.post('?action=calcDistanceStyleGenderAverageEnclosure', args, function (data) {
+        $('#form_two_result').val(data.result);
+
+    }, 'JSON').fail(function () {
+        alert("La solicitud a fallado!!!");
+    });
+});
+
+
+</script>

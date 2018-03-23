@@ -24,8 +24,20 @@ class IndexModel {
      * @return array result
      * function to select all enclosure style
      */
-    function selectAll() {
+    function selectAllEnclosureStyle() {
         $query = $this->db->prepare("call sp_select_all_enclosure_style()");
+        $query->execute();
+        $result = $query->fetchAll();
+        $query->closeCursor();
+        return $result;
+    }
+
+        /**
+     * @return array result
+     * function to select all enclosure style
+     */
+    function selectAllStyleGenderAverageEnclosure() {
+        $query = $this->db->prepare("call sp_select_all_style_gender_average_enclosure()");
         $query->execute();
         $result = $query->fetchAll();
         $query->closeCursor();

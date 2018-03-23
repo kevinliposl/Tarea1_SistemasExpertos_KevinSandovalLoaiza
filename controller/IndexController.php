@@ -25,13 +25,12 @@ class IndexController {
 
     function calcDistanceEnclosureStyle(){
         $model= new IndexModel;
-        $result = $model->selectAll();
-        $arrayA = array($_POST['ca'],$_POST['ec'],$_POST['ea'],$_POST['or'],$_POST['caec'],$_POST['eaor']);
+        $result = $model->selectAllEnclosureStyle();
+        $arrayA = array($_POST['ca'],$_POST['ec'],$_POST['ea'],$_POST['or']);
         $distancetmp = 1000;
-        $idTmp = 0;
         $styletmp = '';
         foreach($result as $var){
-            $arrayB = array($var['style_ca'],$var['style_ec'],$var['style_ea'],$var['style_or'],$var['style_ca_ec'],$var['style_ea_or']);
+            $arrayB = array($var['style_ca'],$var['style_ec'],$var['style_ea'],$var['style_or']);
             $tmp = $this->distanceEuclidean($arrayA,$arrayB);
               if($tmp<$distancetmp){
                  $distancetmp = $tmp;
@@ -41,6 +40,23 @@ class IndexController {
         echo json_encode(array('result'=>$styletmp));
     }
 
+    function calcDistanceStyleGenderAverageEnclosure(){
+        $model= new IndexModel;
+        $result = $model->selectAllStyleGenderAverageEnclosure();
+        $arrayA = array($_POST['style'],$_POST['average'],$_POST['gender']);
+        $distancetmp = 1000;
+        $enclosuretmp;
+        foreach($result as $var){
+            $arrayB = array($var['ssae_style'],$var['ssae_average'],$var['ssae_gender']);
+            $tmp = $this->distanceEuclidean($arrayA,$arrayB);
+              if($tmp<$distancetmp){
+                 $distancetmp = $tmp;
+                 $enclosuretmp = $var['ssae_enclosure'];
+              }
+        }
+        echo json_encode(array('result'=>$enclosuretmp));
+    }
+
     private function distanceEuclidean($arrayA, $arrayB){    
         if (count($arrayA) !== count($arrayB)) {
             return -1;
@@ -48,7 +64,11 @@ class IndexController {
         $distance = 0;
         $length = count($arrayA);
         for ($i=0; $i<$length; $i++) {
-            $distance += ($arrayA[$i] - $arrayB[$i]) ** 2;
+            if(!is_string($arrayA[$i])){
+                $distance += ($arrayA[$i] - $arrayB[$i]) ** 2;
+            }else{
+                $distance += (levenshtein($arrayA[$i], $arrayB[$i])) ** 2;
+            }
         }
         return sqrt((float) $distance);
     }

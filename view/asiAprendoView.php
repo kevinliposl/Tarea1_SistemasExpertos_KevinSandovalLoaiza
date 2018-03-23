@@ -364,13 +364,13 @@
         </tbody>
     </table>
     <br>
-    <input value="Calcular Distancia de Euclides" type="button" id='form_input_one'/>
-    <input type="text" id="form_input_one_result"/>
+    <input value="Calcular Distancia de Euclides" type="button" id='form_one_button'/>
+    <input type="text" id="form_one_result"/>
     <br>
 </form>
 
 <script>
-$('#form_input_one').click(function(){
+$('#form_one_button').click(function(){
 
 var ec = parseInt($('#c5').val()) + parseInt($('#c9').val()) +
             parseInt($('#c13').val()) + parseInt($('#c17').val()) +
@@ -384,28 +384,16 @@ var ec = parseInt($('#c5').val()) + parseInt($('#c9').val()) +
         var ea = parseInt($('#c4').val()) + parseInt($('#c12').val()) +
             parseInt($('#c24').val()) + parseInt($('#c28').val()) +
             parseInt($('#c32').val()) + parseInt($('#c36').val());
-
-//        alert('Array ea: ' + JSON.stringify(ea));
-//        alert('Array ca: ' + JSON.stringify(ca));
-//        alert('Array or: ' + JSON.stringify(or));
-//        alert('Array ec: ' + JSON.stringify(ec));
-
-        caec = ca - ec;
-        eaor = ea - or;
     
         var args = {
             'ec': ec,
             'or': or,
             'ca': ca,
             'ea': ea,
-            'caec': caec,
-            'eaor': eaor,
         };
 
-//        alert(JSON.stringify(args));
-
         $.post('?action=calcDistanceEnclosureStyle', args, function (data) {
-          $('#form_input_one_result').val(data.result);
+          $('#form_one_result').val(data.result);
 
         }, 'JSON').fail(function () {
             alert("La solicitud a fallado!!!");
