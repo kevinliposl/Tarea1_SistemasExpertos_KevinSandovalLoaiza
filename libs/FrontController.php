@@ -14,7 +14,7 @@ class FrontController {
         if (!empty(filter_input(INPUT_GET, 'action'))) {
             $actionName = filter_input(INPUT_GET, 'action');
         } else {
-            $actionName = 'default';
+            $actionName = 'defaultAction';
         }
         $config = Config::singleton();
         $controllerPath = $config->get('controllerFolder') . $controllerName . '.php';

@@ -19,11 +19,11 @@
 
 <form name="estilo">
     <table>
-    <thead>
+        <thead>
         <th>Estilo de Aprendizaje</th>
         <th>Promedio de Matricula</th>
         <th>Sexo</th>
-    </thead>
+        </thead>
         <tbody>
             <tr>
                 <td style='width:33%;'>
@@ -36,7 +36,7 @@
                 </td>
 
                 <td style='width:33%;'>
-                    <input id='form_two_average' style='width:100%;' type="text" required/>
+                    <input id='form_two_average' style='width:100%;' type="text" value="8.00" required/>
                 </td>
                 <td style='width:33%;'>
                     <select id="form_two_gender" style='width:100%;'>
@@ -55,25 +55,27 @@
 </form>
 
 <script>
-$('#form_two_button').click(function(){
+    /** 
+     * @description Escucha el evento de click del botón de recintoOrigenView.php.  
+     * @param null  
+     * @return null  
+     */
+    $('#form_two_button').click(function () {
 
-    var style = $('#form_two_style').val();
-    var average = parseInt($('#form_two_average').val());
-    var gender = $('#form_two_gender').val();
+        var style = $('#form_two_style').val();
+        var average = parseInt($('#form_two_average').val());
+        var gender = $('#form_two_gender').val();
 
-    var args = {
-        'style': style,
-        'average': average,
-        'gender': gender
-    };
+        var args = {
+            'style': style,
+            'average': average,
+            'gender': gender
+        };
 
-    $.post('?action=calcDistanceStyleGenderAverageEnclosure', args, function (data) {
-        $('#form_two_result').val(data.result);
-
-    }, 'JSON').fail(function () {
-        alert("La solicitud a fallado!!!");
+        $.post('?action=calcDistanceStyleGenderAverageEnclosure', args, function (data) {
+            $('#form_two_result').val(data.result);
+        }, 'JSON').fail(function () {
+            alert("La solicitud a fallado!!!");
+        });
     });
-});
-
-
 </script>
