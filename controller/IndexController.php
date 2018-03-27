@@ -36,24 +36,22 @@ class IndexController {
                 $distance += levenshtein($arrayA[$i], $arrayB[$i]);
             }
         }
-        return 1 / (1 + sqrt((float) $distance));
+        return 1 / ( 1 + sqrt((float) $distance));
     }
 
     function calcDistanceEnclosureStyle() {
         $model = new IndexModel();
         $vars = $model->selectAllEnclosureStyle();
         $arrayA = array($_POST['ca'], $_POST['ec'], $_POST['ea'], $_POST['or']);
-        $array_test = array();
         foreach ($vars as $var) {
             $arrayB = array($var['style_ca'], $var['style_ec'], $var['style_ea'], $var['style_or']);
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
                 $this->tmp = $var['style_name'];
-                array_push($array_test, array('Distancia ' => $tmp, 'ID ' => $var['style_id'], 'Estilo ' => $var['style_name']));
             }
         }
-        echo json_encode(array('result' => $array_test));
+        echo json_encode(array('result' => $this->tmp));
     }
 
     function calcDistanceStyleGenderAverageEnclosure() {

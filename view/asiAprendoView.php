@@ -391,15 +391,15 @@
                 parseInt($('#c32').val()) + parseInt($('#c36').val());
 
         var args = {
-            'ec': 12,
-            'or': 14,
-            'ca': 19,
-            'ea': 16
+            'ec': ec,
+            'or': or,
+            'ca': ca,
+            'ea': ea
         };
 
         $.post('?action=calcDistanceEnclosureStyle', args, function (data) {
-            $('#form_one_result').val(data.result);
-            //alert(JSON.stringify(data.result));
+            //$('#form_one_result').val(data.result);
+            alert(JSON.stringify(data.result));
         }, 'JSON').fail(function () {
             alert("La solicitud a fallado!!!");
         });
