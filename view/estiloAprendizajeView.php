@@ -16,7 +16,7 @@
     </font>
 </p>
 
-<form name="estilo">
+<form onsubmit="return send_four_form();">
     <table>
         <thead>
         <th>Sexo</th>
@@ -33,7 +33,7 @@
                 </td>
 
                 <td style='width:33%;'>
-                    <input id="form_four_average" style="width:100%;" type="text" value="8.00" required/>
+                    <input id="form_four_average" style="width:100%;" type="number" min="0" value="8.00" required/>
                 </td>
                 
                 <td style='width:33%;'>
@@ -47,35 +47,7 @@
     </table>
     <br>
     <br>
-    <input value="Adivinar Estilo de Apredizaje" type="button" id="form_four_button"/>
+    <input value="Adivinar Estilo de Apredizaje" type="submit" id="form_four_button"/>
     <input type="text" id="form_four_result" size="50"/>
     <br>
 </form>
-
-<script>
-
-    /** 
-     * @description Escucha el evento de click del botón de recintoOrigenView.php.  
-     * @param null  
-     * @return null  
-     */
-    $('#form_four_button').click(function () {
-
-        var gender = $('#form_four_gender').val();
-        var average = parseInt($('#form_four_average').val());
-        var enclosure = $('#form_four_enclosure').val();
-
-        var args = {
-            'gender': gender,
-            'average': average,
-            'enclosure': enclosure
-        };
-
-        $.post('?action=calcToGuessLearningStyle', args, function (data) {
-            $('#form_four_result').val(data.result);
-        }, 'JSON').fail(function () {
-            alert("La solicitud a fallado!!!");
-        });
-    });
-
-</script>

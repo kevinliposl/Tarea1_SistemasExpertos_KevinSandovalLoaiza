@@ -23,48 +23,42 @@
 
 <br>
 
-<form name="estilo">
+<form onsubmit="return send_seven_form();">
     <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
         <tbody>
             <tr>
                 <td style="vertical-align: top; width: 25%;">
-                    <select id="re">
-                        <option value="1">1</option>
+                    <select id="form_seven_reliability">
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
+                        <option value="5">5</option>
                     </select>
-                    Reliability (Re)<br>
+                    Confiabilidad<br>
                 </td>
                 <td style="vertical-align: top; width: 25%;">
-                    <select id="li">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                    Number of links (Li)<br>
+                    <input id="form_seven_links" value="0" type="number" min="0" pattern="^[0-9]+" required/>
+                    N&uacute;mero de enlaces
                 </td>
                 <td style="vertical-align: top;">
-                    <select id="ca">
-                        <option value="1">Low</option>
-                        <option value="2">Medium</option>
-                        <option value="3">High</option>
+                    <select id="form_seven_capacity">
+                        <option value="Low">Baja</option>
+                        <option value="Medium">Media</option>
+                        <option value="High">Alta</option>
                     </select>
-                    Capacity (Ca)</td>
+                    Capacidad</td>
                 <td style="vertical-align: top;">
-                    <select id="co">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
+                    <select id="form_seven_cost">
+                        <option value="Low">Baja</option>
+                        <option value="Medium">Media</option>
+                        <option value="High">Alta</option>
                     </select>
-                    Cost (Co)</td>
+                    Costo</td>
             </tr>
         </tbody>
     </table>
     <br>
-    <input value="Calcular" type="button" id='form_six_button'/>
-    <input type="text" id="form_six_result"/>
+    <input value="Calcular" type="submit" id='form_seven_button'/>
+    <input type="text" id="form_seven_result" size="50"/>
     <br>
 </form>

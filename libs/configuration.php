@@ -7,6 +7,6 @@ $config->set('modelFolder', 'model/');
 $config->set('viewFolder', 'view/');
 
 $config->set('dbhost', 'localhost');
-$config->set('dbname', 'tarea1_sistemasexpertos_kevinsandovalloaiza');
+$config->set('dbname', 'homework1_expertsystems_b46549');
 $config->set('dbuser', 'root');
 $config->set('dbpass', '');

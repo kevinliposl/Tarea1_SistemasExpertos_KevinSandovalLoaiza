@@ -31,7 +31,7 @@
 </h3>
 <br>
 
-<form name="estilo">
+<form onsubmit="return send_one_form();">
     <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
         <tbody>
             <tr>
@@ -345,43 +345,7 @@
         </tbody>
     </table>
     <br>
-    <input value="Calcular estilo de aprendizaje" type="button" id='form_one_button'/>
+    <input value="Calcular estilo de aprendizaje" type="submit" id='form_one_button'/>
     <input type="text" id="form_one_result" size="50"/>
     <br>
 </form>
-
-<script>
-    /** 
-     * @description Escucha el evento de click del botón de asiAprendoView.php  
-     * @param null  
-     * @return null  
-     */
-    $('#form_one_button').click(function () {
-
-        var ec = parseInt($('#c5').val()) + parseInt($('#c9').val()) +
-                parseInt($('#c13').val()) + parseInt($('#c17').val()) +
-                parseInt($('#c25').val()) + parseInt($('#c29').val());
-        var or = parseInt($('#c2').val()) + parseInt($('#c10').val()) +
-                parseInt($('#c22').val()) + parseInt($('#c26').val()) +
-                parseInt($('#c30').val()) + parseInt($('#c34').val());
-        var ca = parseInt($('#c7').val()) + parseInt($('#c11').val()) +
-                parseInt($('#c15').val()) + parseInt($('#c19').val()) +
-                parseInt($('#c31').val()) + parseInt($('#c35').val());
-        var ea = parseInt($('#c4').val()) + parseInt($('#c12').val()) +
-                parseInt($('#c24').val()) + parseInt($('#c28').val()) +
-                parseInt($('#c32').val()) + parseInt($('#c36').val());
-
-        var args = {
-            'ec': ec,
-            'or': or,
-            'ca': ca,
-            'ea': ea
-        };
-
-        $.post('?action=calcLearningStyles', args, function (data) {
-            $('#form_one_result').val(data.result);
-        }, 'JSON').fail(function () {
-            alert("La solicitud a fallado!!!");
-        });
-    });
-</script>

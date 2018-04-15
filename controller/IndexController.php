@@ -13,15 +13,24 @@ class IndexController {
     private $distance;
     private $tmp;
 
+    /**
+     * 
+     */
     function __construct() {
         $this->view = new View();
         require_once 'model/IndexModel.php';
     }
 
+    /**
+     * 
+     */
     function defaultAction() {
         $this->view->show("indexView.php");
     }
 
+    /**
+     * 
+     */
     function distanceEuclidean($arrayA, $arrayB) {
         if (count($arrayA) !== count($arrayB)) {
             return NULL;
@@ -35,70 +44,85 @@ class IndexController {
         return 1 / ( 1 + sqrt((float) $distance));
     }
 
+    /**
+     * 
+     */
     function calcLearningStyles() {
         $model = new IndexModel();
-        $vars = $model->selectAllEnclosureStyle();
+        $vars = $model->selectAllStyle();
         $arrayA = array($_POST['ca'], $_POST['ec'], $_POST['ea'], $_POST['or']);
         foreach ($vars as $var) {
-            $arrayB = array($var['style_ca'], $var['style_ec'], $var['style_ea'], $var['style_or']);
+            $arrayB = array($var['ca'], $var['ec'], $var['ea'], $var['or']);
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
-                $this->tmp = $var['style_name'];
+                $this->tmp = $var['name'];
             }
         }
         echo json_encode(array('result' => "Estilo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    /**
+     * 
+     */
     function calcToGuessTheEnclosure() {
         $model = new IndexModel;
-        $vars = $model->selectAllStyleGenderAverageEnclosure();
+        $vars = $model->selectAllStyleGenderEnclosureAverageStyle();
         $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
         $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 1 : 2));
         foreach ($vars as $var) {
-            $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-            $arrayB = array($styletmp, $var['ssae_average'], $var['ssae_gender'] == "M" ? 1 : 2);
+            $styletmp = strcasecmp($var['style'], "DIVERGENTE") != 0 ? (strcasecmp($var['style'], "ASIMILADOR") != 0 ? (strcasecmp($var['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+            $arrayB = array($styletmp, $var['average'], $var['gender'] == "M" ? 1 : 2);
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
-                $this->tmp = $var['ssae_enclosure'];
+                $this->tmp = $var['enclosure'];
             }
         }
         echo json_encode(array('result' => "Recinto= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    /**
+     * 
+     */
     function calcToGuessGender() {
         $model = new IndexModel;
-        $vars = $model->selectAllStyleGenderAverageEnclosure();
+        $vars = $model->selectAllStyleGenderEnclosureAverageStyle();
         $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
         $arrayA = array($style, $_POST['average'], ($_POST['enclosure'] == "Turrialba" ? 1 : 2));
         foreach ($vars as $var) {
-            $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-            $arrayB = array($styletmp, $var['ssae_average'], ($var['ssae_enclosure'] == "Turrialba" ? 1 : 2));
+            $styletmp = strcasecmp($var['style'], "DIVERGENTE") != 0 ? (strcasecmp($var['style'], "ASIMILADOR") != 0 ? (strcasecmp($var['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+            $arrayB = array($styletmp, $var['average'], ($var['enclosure'] == "Turrialba" ? 1 : 2));
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
-                $this->tmp = $var['ssae_gender'];
+                $this->tmp = $var['gender'];
             }
         }
         echo json_encode(array('result' => "Sexo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    /**
+     * 
+     */
     function calcToGuessLearningStyle() {
         $model = new IndexModel;
-        $vars = $model->selectAllStyleGenderAverageEnclosure();
+        $vars = $model->selectAllStyleGenderEnclosureAverageStyle();
         $arrayA = array($_POST['gender'] == "M" ? 1 : 2, $_POST['average'], ($_POST['enclosure'] == "Turrialba" ? 1 : 2));
         foreach ($vars as $var) {
-            $arrayB = array($var['ssae_gender'] == "M" ? 1 : 2, $var['ssae_average'], ($var['ssae_enclosure'] == "Turrialba" ? 1 : 2));
+            $arrayB = array($var['gender'] == "M" ? 1 : 2, $var['average'], ($var['enclosure'] == "Turrialba" ? 1 : 2));
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
-                $this->tmp = $var['ssae_style'];
+                $this->tmp = $var['style'];
             }
         }
         echo json_encode(array('result' => "Estilo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    /**
+     * 
+     */
     function calcToGuessTypeOfProfessor() {
         $model = new IndexModel;
         $vars = $model->selectAllProfessors();
@@ -114,6 +138,36 @@ class IndexController {
         echo json_encode(array('result' => "Tipo de profesor= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    /**
+     * 
+     */
+    function calcToGuessClassificationOfNetworks() {
+        $model = new IndexModel;
+        $vars = $model->selectAllNetworks();
+        $arrayA = $this->transformInputGuessClassificationOfNetworks($_POST);
+        foreach ($vars as $var) {
+            $arrayB = $this->transformInputGuessClassificationOfNetworks($var);
+            $tmp = $this->distanceEuclidean($arrayA, $arrayB);
+            if ($tmp > $this->distance) {
+                $this->distance = $tmp;
+                $this->tmp = $var['class'];
+            }
+        }
+        echo json_encode(array('result' => "Clase= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
+    }
+
+    /**
+     * 
+     */
+    function transformInputGuessClassificationOfNetworks($array = array()) {
+        $cost = strcasecmp($array['cost'], "Low") != 0 ? (strcasecmp($array['cost'], "Medium") != 0 ? 3 : 2) : 1;
+        $capacity = strcasecmp($array['capacity'], "Low") != 0 ? (strcasecmp($array['capacity'], "Medium") != 0 ? 3 : 2) : 1;
+        return array(intval($array['links']), intval($array['reliability']), $capacity, $cost);
+    }
+
+    /**
+     * 
+     */
     function transformInputGuessTypeOfProfessor($array = array()) {
         $experience = $array['experience'];
         $gender = strcasecmp($array['gender'], "M") != 0 ? (strcasecmp($array['gender'], "F") != 0 ? 3 : 2) : 1;
@@ -125,6 +179,4 @@ class IndexController {
         return array($array['age'], $gender, $evaluation, $experience, $discipline, $abilities_computers, $abilities_use_technologies, $experience_website);
     }
 
-    
-    
 }

@@ -26,9 +26,7 @@
     </font>
 </p>
 
-<br>
-
-<form name="estilo">
+<form onsubmit="return send_six_form();">
     <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
         <tbody>
             <tr>
@@ -100,43 +98,6 @@
         </tbody>
     </table>
     <br>
-    <input value="Calcular" type="button" id='form_six_button'/>
+    <input value="Calcular" type="submit" id='form_six_button'/>
     <input type="text" id="form_six_result" size="50"/>
 </form>
-
-<script>
-    /** 
-     * @description Escucha el evento de click del botón de recintoOrigenView.php.  
-     * @param null  
-     * @return null  
-     */
-    $('#form_six_button').click(function () {
-
-        var age = parseInt($('#form_six_age').val());
-        var gender = $('#form_six_gender').val();
-        var evaluation = $('#form_six_self-evaluation').val();
-        var experience = parseInt($('#form_six_experience').val());
-        var discipline = $('#form_six_discipline').val();
-        var abilities_computers = $('#form_six_abilities_computers').val();
-        var abilities_use_technologies = $('#form_six_abilities_use_technologies').val();
-        var experience_website = $('#form_six_experience_website').val();
-
-
-        var args = {
-            'age': age,
-            'evaluation': evaluation,
-            'gender': gender,
-            'experience': experience,
-            'discipline': discipline,
-            'abilities_computers': abilities_computers,
-            'abilities_use_technologies': abilities_use_technologies,
-            'experience_website': experience_website
-        };
-
-        $.post('?action=calcToGuessTypeOfProfessor', args, function (data) {
-            $('#form_six_result').val(data.result);
-        }, 'JSON').fail(function () {
-            alert("La solicitud a fallado!!!");
-        });
-    });
-</script>

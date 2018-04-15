@@ -24,8 +24,8 @@ class IndexModel {
      * @return array result
      * function to select all enclosure style
      */
-    function selectAllEnclosureStyle() {
-        $query = $this->db->prepare("call sp_select_all_enclosure_style()");
+    function selectAllStyle() {
+        $query = $this->db->prepare("call sp_select_all_style()");
         $query->execute();
         $result = $query->fetchAll();
         $query->closeCursor();
@@ -36,8 +36,8 @@ class IndexModel {
      * @return array result
      * function to select all enclosure style
      */
-    function selectAllStyleGenderAverageEnclosure() {
-        $query = $this->db->prepare("call sp_select_all_style_gender_average_enclosure()");
+    function selectAllStyleGenderEnclosureAverageStyle() {
+        $query = $this->db->prepare("call sp_select_all_enclosure_gender_style()");
         $query->execute();
         $result = $query->fetchAll();
         $query->closeCursor();
@@ -50,6 +50,18 @@ class IndexModel {
      */
     function selectAllProfessors() {
         $query = $this->db->prepare("call sp_select_all_professors()");
+        $query->execute();
+        $result = $query->fetchAll();
+        $query->closeCursor();
+        return $result;
+    }
+
+    /**
+     * @return array result
+     * function to select all professors
+     */
+    function selectAllNetworks() {
+        $query = $this->db->prepare("call sp_select_all_networks()");
         $query->execute();
         $result = $query->fetchAll();
         $query->closeCursor();

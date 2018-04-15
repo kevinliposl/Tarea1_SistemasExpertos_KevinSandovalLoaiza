@@ -1,8 +1,7 @@
-/* CREATE DATABASE tarea1_sistemasexpertos_kevinsandovalloaiza;
-USE tarea1_sistemasexpertos_kevinsandovalloaiza;
+CREATE DATABASE homework1_expertsystems_b46549;
+USE homework1_expertsystems_b46549;
 
-CREATE TABLE tb_enclosure_style(
-	style_id SMALLINT AUTO_INCREMENT,
+CREATE TABLE tb_style(
     style_enclosurename VARCHAR(50) NOT NULL,
 	style_ca FLOAT NOT NULL,
 	style_ec FLOAT NOT NULL,
@@ -10,19 +9,18 @@ CREATE TABLE tb_enclosure_style(
 	style_or FLOAT NOT NULL,
 	style_ca_ec FLOAT NOT NULL,
 	style_ea_or FLOAT NOT NULL,
-    style_name VARCHAR(50) NOT NULL,
-	CONSTRAINT PRIMARY KEY (style_id)
+    style_name VARCHAR(50) NOT NULL
 );
-*/
+
 DELIMITER $$
-CREATE PROCEDURE sp_select_all_enclosure_style()
+CREATE PROCEDURE sp_select_all_style()
 BEGIN
-	SELECT * 
-	FROM tb_enclosure_style; 
+	SELECT style_ca 'ca', style_ec 'ec', style_ea 'ea', style_or 'or', style_name 'name'
+	FROM tb_style; 
 END $$
 DELIMITER ; 
 
-INSERT INTO `tb_enclosure_style` (`style_enclosurename`, `style_ca`, `style_ec`, `style_ea`, `style_or`, `style_ca_ec`, `style_ea_or`, `style_name`) VALUES
+INSERT INTO `tb_style` (`style_enclosurename`, `style_ca`, `style_ec`, `style_ea`, `style_or`, `style_ca_ec`, `style_ea_or`, `style_name`) VALUES
 ('Paraiso', 15, 15, 19, 12, 0, 7, 'ACOMODADOR'),
 ('Paraiso', 16, 17, 18, 19, -1, -1, 'DIVERGENTE'),
 ('Paraiso', 15, 13, 17, 17, 2, 0, 'DIVERGENTE'),
@@ -247,30 +245,28 @@ INSERT INTO `tb_enclosure_style` (`style_enclosurename`, `style_ca`, `style_ec`,
 ('Turrialba', 17, 10, 20, 19, 7, 1, 'ASIMILADOR');
 
 
-CREATE TABLE tb_style_gender_average_enclosure(
-	ssae_id SMALLINT AUTO_INCREMENT,
-    ssae_gender CHAR NOT NULL,
-	ssae_enclosure VARCHAR(25) NOT NULL,
-	ssae_average FLOAT NOT NULL,
-	ssae_ca FLOAT NOT NULL,	
-    ssae_ec FLOAT NOT NULL,
-	ssae_ea FLOAT NOT NULL,
-	ssae_or FLOAT NOT NULL,	
-    ssae_ca_ec FLOAT NOT NULL,
-	ssae_ea_or FLOAT NOT NULL,
-	ssae_style VARCHAR(50) NOT NULL,
-    CONSTRAINT PRIMARY KEY (ssae_id)
+CREATE TABLE tb_guess_enclosure_gender_style(
+	egs_gender CHAR NOT NULL,
+	egs_enclosure VARCHAR(25) NOT NULL,
+	egs_average FLOAT NOT NULL,
+	egs_ca FLOAT NOT NULL,	
+    egs_ec FLOAT NOT NULL,
+	egs_ea FLOAT NOT NULL,
+	egs_or FLOAT NOT NULL,	
+    egs_ca_ec FLOAT NOT NULL,
+	egs_ea_or FLOAT NOT NULL,
+	egs_style VARCHAR(50) NOT NULL
 );
 
 DELIMITER $$
-CREATE PROCEDURE sp_select_all_style_gender_average_enclosure()
+CREATE PROCEDURE sp_select_all_enclosure_gender_style()
 BEGIN 
-	SELECT * 
-    FROM tb_style_gender_average_enclosure;
+	SELECT egs_gender 'gender',egs_enclosure 'enclosure', egs_average 'average', egs_ca, egs_style 'style'
+    FROM tb_guess_enclosure_gender_style;
 END $$
 DELIMITER ; 
 
-INSERT INTO `tb_style_gender_average_enclosure` (`ssae_gender`, `ssae_enclosure`, `ssae_average`, `ssae_ca`, `ssae_ec`, `ssae_ea`, `ssae_or`, `ssae_ca_ec`, `ssae_ea_or`, `ssae_style`) VALUES
+INSERT INTO `tb_guess_enclosure_gender_style` (`egs_gender`, `egs_enclosure`, `egs_average`, `egs_ca`, `egs_ec`, `egs_ea`, `egs_or`, `egs_ca_ec`, `egs_ea_or`, `egs_style`) VALUES
 ('M', 'Paraiso', 8.17, 15, 15, 19, 12, 0, 7, 'ACOMODADOR'),
 ('M', 'Paraiso', 6.33, 16, 17, 18, 19, -1, -1, 'DIVERGENTE'),
 ('M', 'Paraiso', 7.07, 15, 13, 17, 17, 2, 0, 'DIVERGENTE'),
@@ -351,7 +347,6 @@ INSERT INTO `tb_style_gender_average_enclosure` (`ssae_gender`, `ssae_enclosure`
 
 
 CREATE TABLE tb_professor(
-	professor_id SMALLINT AUTO_INCREMENT,
     professor_a INTEGER NOT NULL,
     professor_b CHAR(2) NOT NULL,
 	professor_c CHAR NOT NULL,
@@ -360,8 +355,7 @@ CREATE TABLE tb_professor(
 	professor_f CHAR NOT NULL,
 	professor_g CHAR NOT NULL,
 	professor_h CHAR NOT NULL,
-    professor_class VARCHAR(20) NOT NULL,
-    CONSTRAINT PRIMARY KEY (professor_id)
+    professor_class VARCHAR(20) NOT NULL
 );
 
 INSERT INTO `tb_professor` (`professor_a`, `professor_b`, `professor_c`, `professor_d`, `professor_e`, `professor_f`, `professor_g`, `professor_h`, `professor_class`) VALUES
@@ -396,17 +390,17 @@ BEGIN
 END $$
 DELIMITER ;
 
-CREATE TABLE tb_networt(
-	netword_id SMALLINT AUTO_INCREMENT,
-	netword_reliability SMALLINT NOT NULL,
-	netword_number_of_links SMALLINT NOT NULL,
-	netword_capacity VARCHAR(20) NOT NULL,	
-    netword_cost VARCHAR(20) NOT NULL,
-	netword_class CHAR NOT NULL,
-	CONSTRAINT PRIMARY KEY(netword_id)
+CREATE TABLE tb_network(
+	network_id SMALLINT AUTO_INCREMENT,
+	network_reliability SMALLINT NOT NULL,
+	network_number_of_links SMALLINT NOT NULL,
+	network_capacity VARCHAR(20) NOT NULL,	
+    network_cost VARCHAR(20) NOT NULL,
+	network_class CHAR NOT NULL,
+	CONSTRAINT PRIMARY KEY(network_id)
 );
 
-INSERT INTO `tb_networt` (`netword_id`, `netword_reliability`, `netword_number_of_links`, `netword_capacity`, `netword_cost`, `netword_class`) VALUES
+INSERT INTO `tb_network` (`network_id`, `network_reliability`, `network_number_of_links`, `network_capacity`, `network_cost`, `network_class`) VALUES
 (1, 2, 7, 'High', 'High', 'A'),
 (2, 2, 16, 'High', 'High', 'A'),
 (3, 2, 9, 'Medium', 'High', 'A'),
@@ -443,3 +437,10 @@ INSERT INTO `tb_networt` (`netword_id`, `netword_reliability`, `netword_number_o
 (34, 5, 20, 'High', 'High', 'B'),
 (35, 4, 18, 'Medium', 'High', 'B');
 
+DELIMITER $$
+CREATE PROCEDURE sp_select_all_networks()
+BEGIN 
+	SELECT network_reliability 'reliability', network_number_of_links 'links', network_capacity 'capacity', network_cost 'cost', network_class 'class'
+    FROM tb_network;
+END $$
+DELIMITER ;
