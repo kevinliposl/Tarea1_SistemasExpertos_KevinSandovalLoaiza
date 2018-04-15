@@ -12,8 +12,8 @@
 
 <p class="western" align="justify" lang="es-ES">
     <font color="#000000" size="3">
-    Seleccione su estilo de aprendizaje de los cuatro usados (divergente, convergente, asimilador, acomodador),
-    su último promedio para matrícula y su sexo.
+    Seleccione su estilo de aprendizaje de los cuatro usados (divergente, convergente, asimilador,
+    acomodador), su último promedio para matrícula y su recinto (Paraíso o Turrialba).
     </font>
 </p>
 
@@ -22,7 +22,7 @@
         <thead>
         <th>Estilo de Aprendizaje</th>
         <th>Promedio de Matricula</th>
-        <th>Sexo</th>
+        <th>Recinto</th>
         </thead>
         <tbody>
             <tr>
@@ -36,7 +36,7 @@
                 </td>
 
                 <td style='width:33%;'>
-                    <input id='form_three_average' style='width:100%;' type="text" value="8.00" required/>
+                    <input id="form_three_average" style="width:100%;" type="text" value="8.00" required/>
                 </td>
                 <td style='width:33%;'>
                     <select id="form_three_enclosure" style='width:100%;'>
@@ -49,8 +49,8 @@
     </table>
     <br>
     <br>
-    <input value="Adivinar Recinto de Origen" type="button" id="form_three_button"/>
-    <input type="text" id="form_three_result"/>
+    <input value="Adivinar Sexo del Estudiante" type="button" id="form_three_button"/>
+    <input type="text" id="form_three_result" size="50"/>
     <br>
 </form>
 
@@ -65,15 +65,15 @@
 
         var style = $('#form_three_style').val();
         var average = parseInt($('#form_three_average').val());
-        var gender = $('#form_three_gender').val();
+        var enclosure = $('#form_three_enclosure').val();
 
         var args = {
             'style': style,
             'average': average,
-            'gender': gender
+            'enclosure': enclosure
         };
 
-        $.post('?action=calcDistanceStyleGenderAverageEnclosure', args, function (data) {
+        $.post('?action=calcToGuessGender', args, function (data) {
             $('#form_three_result').val(data.result);
         }, 'JSON').fail(function () {
             alert("La solicitud a fallado!!!");

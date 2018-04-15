@@ -1,6 +1,6 @@
 <p class="western" align="justify" lang="es-ES">
     <font color="#FF8c3f" size="3">
-    <b>CUAL ES SU ESTILO DE APRENDIZAJE?</b>
+    <b>ESTILO DE APRENDIZAJE</b>
     </font>
 </p>
 
@@ -19,30 +19,11 @@
     </font>
 </p>
 
-<p class="western" lang="es-ES"> 
-    <font color="#000000" size="3">
-    Le puede ser difícil seleccionar
-    las palabras que mejor describen su estilo de aprendizaje, ya que no
-    hay respuestas correctas o incorrectas.
-    </font>
-</p>
-
 <p class="western" align="justify" lang="es-ES">
     <font color="#000000" size="3">
-    Todas las respuestas son buenas, ya que el fin del instrumento es describir
-    cómo y no juzgar su habilidad para aprender.
-    </font>
-</p>
-
-<p class="western" align="justify" lang="es-ES">
-    <font color="#000000" size="3">
-    De inmediato encontrará nueve series o líneas de cuatro palabras cada una.
     Ordene de mayor a menor cada serie o juego de cuatro palabras que hay en cada línea,
     ubicando 4 en la palabra que mejor caracteriza su estilo de
-    aprendizaje, un 3 en la palabra siguiente en cuanto a la
-    correspondencia con su estilo; a la siguiente un 2, y un 1 a la
-    palabra que menos caracteriza su estilo. Tenga cuidado de ubicar un
-    número distinto al lado de cada palabra en la misma línea. 
+    aprendizaje y un 1 a la palabra que menos caracteriza su estilo. 
     </font>
 </p>
 <h3>
@@ -364,8 +345,8 @@
         </tbody>
     </table>
     <br>
-    <input value="Calcular" type="button" id='form_one_button'/>
-    <input type="text" id="form_one_result"/>
+    <input value="Calcular estilo de aprendizaje" type="button" id='form_one_button'/>
+    <input type="text" id="form_one_result" size="50"/>
     <br>
 </form>
 
@@ -397,9 +378,8 @@
             'ea': ea
         };
 
-        $.post('?action=calcDistanceEnclosureStyle', args, function (data) {
-            //$('#form_one_result').val(data.result);
-            alert(JSON.stringify(data.result));
+        $.post('?action=calcLearningStyles', args, function (data) {
+            $('#form_one_result').val(data.result);
         }, 'JSON').fail(function () {
             alert("La solicitud a fallado!!!");
         });

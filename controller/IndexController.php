@@ -35,7 +35,7 @@ class IndexController {
         return 1 / ( 1 + sqrt((float) $distance));
     }
 
-    function calcDistanceEnclosureStyle() {
+    function calcLearningStyles() {
         $model = new IndexModel();
         $vars = $model->selectAllEnclosureStyle();
         $arrayA = array($_POST['ca'], $_POST['ec'], $_POST['ea'], $_POST['or']);
@@ -47,25 +47,17 @@ class IndexController {
                 $this->tmp = $var['style_name'];
             }
         }
-        echo json_encode(array('result' => $this->tmp));
+        echo json_encode(array('result' => "Estilo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
-    /*
-     * 1 Divergente
-     * 2 Asimilador
-     * 3 Acomodador
-     * 4 Convergente
-     */
-
-    function calcDistanceStyleGenderAverageEnclosure() {
+    function calcToGuessTheEnclosure() {
         $model = new IndexModel;
         $vars = $model->selectAllStyleGenderAverageEnclosure();
         $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-        $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 0 : 1));
+        $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 1 : 2));
         foreach ($vars as $var) {
             $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-            $gender = $var['ssae_gender'] == "M" ? 0 : 1;
-            $arrayB = array($styletmp, $var['ssae_average'], $gender);
+            $arrayB = array($styletmp, $var['ssae_average'], $var['ssae_gender'] == "M" ? 1 : 2);
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
@@ -75,20 +67,64 @@ class IndexController {
         echo json_encode(array('result' => "Recinto= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
-    function calcDistance() {
+    function calcToGuessGender() {
         $model = new IndexModel;
         $vars = $model->selectAllStyleGenderAverageEnclosure();
         $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-        $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 0 : 1));
+        $arrayA = array($style, $_POST['average'], ($_POST['enclosure'] == "Turrialba" ? 1 : 2));
         foreach ($vars as $var) {
             $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
-            $arrayB = array($styletmp, $var['ssae_average'], ($var['ssae_gender'] == "M" ? 0 : 1));
+            $arrayB = array($styletmp, $var['ssae_average'], ($var['ssae_enclosure'] == "Turrialba" ? 1 : 2));
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
-                $this->tmp = $var['ssae_enclosure'];
+                $this->tmp = $var['ssae_gender'];
             }
         }
-        echo json_encode(array('result' => "Recinto= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
+        echo json_encode(array('result' => "Sexo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
+
+    function calcToGuessLearningStyle() {
+        $model = new IndexModel;
+        $vars = $model->selectAllStyleGenderAverageEnclosure();
+        $arrayA = array($_POST['gender'] == "M" ? 1 : 2, $_POST['average'], ($_POST['enclosure'] == "Turrialba" ? 1 : 2));
+        foreach ($vars as $var) {
+            $arrayB = array($var['ssae_gender'] == "M" ? 1 : 2, $var['ssae_average'], ($var['ssae_enclosure'] == "Turrialba" ? 1 : 2));
+            $tmp = $this->distanceEuclidean($arrayA, $arrayB);
+            if ($tmp > $this->distance) {
+                $this->distance = $tmp;
+                $this->tmp = $var['ssae_style'];
+            }
+        }
+        echo json_encode(array('result' => "Estilo= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
+    }
+
+    function calcToGuessTypeOfProfessor() {
+        $model = new IndexModel;
+        $vars = $model->selectAllProfessors();
+        $arrayA = $this->transformInputGuessTypeOfProfessor($_POST);
+        foreach ($vars as $var) {
+            $arrayB = $this->transformInputGuessTypeOfProfessor($var);
+            $tmp = $this->distanceEuclidean($arrayA, $arrayB);
+            if ($tmp > $this->distance) {
+                $this->distance = $tmp;
+                $this->tmp = $var['class'];
+            }
+        }
+        echo json_encode(array('result' => "Tipo de profesor= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
+    }
+
+    function transformInputGuessTypeOfProfessor($array = array()) {
+        $experience = $array['experience'];
+        $gender = strcasecmp($array['gender'], "M") != 0 ? (strcasecmp($array['gender'], "F") != 0 ? 3 : 2) : 1;
+        $evaluation = strcasecmp($array['evaluation'], "B") != 0 ? (strcasecmp($array['evaluation'], "I") != 0 ? 3 : 2) : 1;
+        $discipline = strcasecmp($array['discipline'], "DM") != 0 ? (strcasecmp($array['discipline'], "ND") != 0 ? 3 : 2) : 1;
+        $abilities_computers = strcasecmp($array['abilities_computers'], "L") != 0 ? (strcasecmp($array['abilities_computers'], "A") != 0 ? 3 : 2) : 1;
+        $abilities_use_technologies = strcasecmp($array['abilities_use_technologies'], "N") != 0 ? (strcasecmp($array['abilities_use_technologies'], "S") != 0 ? 3 : 2) : 1;
+        $experience_website = strcasecmp($array['experience_website'], "N") != 0 ? (strcasecmp($array['experience_website'], "S") != 0 ? 3 : 2) : 1;
+        return array($array['age'], $gender, $evaluation, $experience, $discipline, $abilities_computers, $abilities_use_technologies, $experience_website);
+    }
+
+    
+    
 }

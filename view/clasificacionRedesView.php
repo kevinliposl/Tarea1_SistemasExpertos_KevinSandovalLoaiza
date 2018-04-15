@@ -14,10 +14,10 @@
     <font color="#000000" size="3">
     Determinar la clasificación de redes (clases A o B), a partir de los
     siguiente criterios que el usuario podrá definir gracias a la interfaz.<br>
-    The network reliability → Reliability (Re)<br>
-    The number of links → Number of links (Li)<br>
-    The total network capacity → Capacity (Ca)<br>
-    The network cost → Cost (Co)
+    Confiabilidad<br>
+    Número de enlaces<br>
+    Capacidad<br>
+    Costo
     </font>
 </p>
 

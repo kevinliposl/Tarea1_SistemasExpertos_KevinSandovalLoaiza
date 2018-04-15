@@ -50,7 +50,7 @@
     <br>
     <br>
     <input value="Adivinar Recinto de Origen" type="button" id="form_two_button"/>
-    <input type="text" id="form_two_result" size="30"/>
+    <input type="text" id="form_two_result" size="50"/>
     <br>
 </form>
 
@@ -72,7 +72,7 @@
             'gender': gender
         };
 
-        $.post('?action=calcDistanceStyleGenderAverageEnclosure', args, function (data) {
+        $.post('?action=calcToGuessTheEnclosure', args, function (data) {
             $('#form_two_result').val(data.result);
         }, 'JSON').fail(function () {
             alert("La solicitud a fallado!!!");

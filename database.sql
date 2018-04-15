@@ -386,6 +386,15 @@ INSERT INTO `tb_professor` (`professor_a`, `professor_b`, `professor_c`, `profes
 (2, 'F', 'A', 1, 'O', 'H', 'S', 'S', 'Advanced'),
 (2, 'M', 'I', 2, 'ND', 'H', 'S', 'S', 'Advanced');
 
+DELIMITER $$
+CREATE PROCEDURE sp_select_all_professors()
+BEGIN 
+	SELECT professor_a 'age', professor_b 'gender', professor_c 'evaluation', professor_d 'experience', 
+    professor_e 'discipline', professor_f 'abilities_computers', professor_g 'abilities_use_technologies', 
+    professor_h 'experience_website', professor_class 'class'
+    FROM tb_professor;
+END $$
+DELIMITER ;
 
 CREATE TABLE tb_networt(
 	netword_id SMALLINT AUTO_INCREMENT,

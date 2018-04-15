@@ -17,7 +17,7 @@ body {
 }
 
 h1 {
-    padding: 50px 0;
+    padding: 25px 0;
     font-weight: 400;
     text-align: center;
 }
@@ -30,7 +30,7 @@ p {
 main {
     min-width: 320px;
     max-width: 900px;
-    padding: 50px;
+    padding: 25px;
     margin: 0 auto;
     background: #fff;
 }

@@ -32,7 +32,7 @@ class IndexModel {
         return $result;
     }
 
-        /**
+    /**
      * @return array result
      * function to select all enclosure style
      */
@@ -43,4 +43,17 @@ class IndexModel {
         $query->closeCursor();
         return $result;
     }
+
+    /**
+     * @return array result
+     * function to select all professors
+     */
+    function selectAllProfessors() {
+        $query = $this->db->prepare("call sp_select_all_professors()");
+        $query->execute();
+        $result = $query->fetchAll();
+        $query->closeCursor();
+        return $result;
+    }
+
 }
