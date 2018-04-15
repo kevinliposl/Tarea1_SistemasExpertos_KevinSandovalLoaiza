@@ -1,5 +1,5 @@
 <p class="western" align="justify" lang="es-ES">
-    <font color="#FF0000" size="3">
+    <font color="#FF8c3f" size="3">
     <b>CUAL ES SU ESTILO DE APRENDIZAJE?</b>
     </font>
 </p>

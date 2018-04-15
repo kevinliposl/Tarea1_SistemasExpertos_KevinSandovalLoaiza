@@ -1,6 +1,6 @@
 <p class="western" align="justify" lang="es-ES">
-    <font color="#FF0000" size="3">
-    <b>CUAL ES SU RECINTO DE ORIGEN?</b>
+    <font color="FF8c3f" size="3">
+    <b>CUAL ES SU SEXO?</b>
     </font>
 </p>
 

@@ -1,5 +1,5 @@
 <p class="western" align="justify" lang="es-ES">
-    <font color="#FF0000" size="3">
+    <font color="#FF8c3f" size="3">
     <b>CUAL ES SU RECINTO DE ORIGEN?</b>
     </font>
 </p>
@@ -50,7 +50,7 @@
     <br>
     <br>
     <input value="Adivinar Recinto de Origen" type="button" id="form_two_button"/>
-    <input type="text" id="form_two_result"/>
+    <input type="text" id="form_two_result" size="30"/>
     <br>
 </form>
 

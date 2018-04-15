@@ -30,11 +30,7 @@ class IndexController {
         $length = count($arrayA);
 
         for ($i = 0; $i < $length; $i++) {
-            if (!is_string($arrayA[$i])) {
-                $distance += ($arrayA[$i] - $arrayB[$i]) ** 2;
-            } else {
-                $distance += levenshtein($arrayA[$i], $arrayB[$i]);
-            }
+            $distance += ($arrayA[$i] - $arrayB[$i]) ** 2;
         }
         return 1 / ( 1 + sqrt((float) $distance));
     }
@@ -54,19 +50,45 @@ class IndexController {
         echo json_encode(array('result' => $this->tmp));
     }
 
+    /*
+     * 1 Divergente
+     * 2 Asimilador
+     * 3 Acomodador
+     * 4 Convergente
+     */
+
     function calcDistanceStyleGenderAverageEnclosure() {
         $model = new IndexModel;
         $vars = $model->selectAllStyleGenderAverageEnclosure();
-        $arrayA = array($_POST['style'], $_POST['average'], $_POST['gender']);
+        $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+        $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 0 : 1));
         foreach ($vars as $var) {
-            $arrayB = array($var['ssae_style'], $var['ssae_average'], $var['ssae_gender']);
+            $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+            $gender = $var['ssae_gender'] == "M" ? 0 : 1;
+            $arrayB = array($styletmp, $var['ssae_average'], $gender);
             $tmp = $this->distanceEuclidean($arrayA, $arrayB);
             if ($tmp > $this->distance) {
                 $this->distance = $tmp;
                 $this->tmp = $var['ssae_enclosure'];
             }
         }
-        echo json_encode(array('result' => $this->tmp));
+        echo json_encode(array('result' => "Recinto= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
     }
 
+    function calcDistance() {
+        $model = new IndexModel;
+        $vars = $model->selectAllStyleGenderAverageEnclosure();
+        $style = strcasecmp($_POST['style'], "DIVERGENTE") != 0 ? (strcasecmp($_POST['style'], "ASIMILADOR") != 0 ? (strcasecmp($_POST['style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+        $arrayA = array($style, $_POST['average'], ($_POST['gender'] == "M" ? 0 : 1));
+        foreach ($vars as $var) {
+            $styletmp = strcasecmp($var['ssae_style'], "DIVERGENTE") != 0 ? (strcasecmp($var['ssae_style'], "ASIMILADOR") != 0 ? (strcasecmp($var['ssae_style'], "ACOMODADOR") != 0 ? 4 : 3) : 2) : 1;
+            $arrayB = array($styletmp, $var['ssae_average'], ($var['ssae_gender'] == "M" ? 0 : 1));
+            $tmp = $this->distanceEuclidean($arrayA, $arrayB);
+            if ($tmp > $this->distance) {
+                $this->distance = $tmp;
+                $this->tmp = $var['ssae_enclosure'];
+            }
+        }
+        echo json_encode(array('result' => "Recinto= " . $this->tmp . ". | Distancia= " . $this->distance . "."));
+    }
 }
