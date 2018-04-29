@@ -14,7 +14,7 @@ class IndexController {
     private $tmp;
 
     /**
-     * 
+     * Constructor de clase
      */
     function __construct() {
         $this->view = new View();
@@ -22,14 +22,14 @@ class IndexController {
     }
 
     /**
-     * 
+     * Accion por defecto de controlador
      */
     function defaultAction() {
         $this->view->show("indexView.php");
     }
 
     /**
-     * 
+     * Funcion que calcula la distancia entre 2 vectores del mismo tamaño, con sus caracteristicas ordenadas. 
      */
     function distanceEuclidean($arrayA, $arrayB) {
         if (count($arrayA) !== count($arrayB)) {
@@ -45,7 +45,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion que calcula el estilo de aprendizaje
      */
     function calcLearningStyles() {
         $model = new IndexModel();
@@ -63,7 +63,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para adivinar el recinto 
      */
     function calcToGuessTheEnclosure() {
         $model = new IndexModel;
@@ -83,7 +83,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para adivinar el Genero
      */
     function calcToGuessGender() {
         $model = new IndexModel;
@@ -103,7 +103,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para adivinar el estilo de aprendizaje del punto 3
      */
     function calcToGuessLearningStyle() {
         $model = new IndexModel;
@@ -121,7 +121,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para adivinar el tipo de profesor
      */
     function calcToGuessTypeOfProfessor() {
         $model = new IndexModel;
@@ -139,7 +139,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para adivinar la clasificacion de la red
      */
     function calcToGuessClassificationOfNetworks() {
         $model = new IndexModel;
@@ -157,7 +157,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para transformacion de datos de las redes
      */
     function transformInputGuessClassificationOfNetworks($array = array()) {
         $cost = strcasecmp($array['cost'], "Low") != 0 ? (strcasecmp($array['cost'], "Medium") != 0 ? 3 : 2) : 1;
@@ -166,7 +166,7 @@ class IndexController {
     }
 
     /**
-     * 
+     * Funcion para la transformacion de los datos del tipo del profesor
      */
     function transformInputGuessTypeOfProfessor($array = array()) {
         $experience = $array['experience'];

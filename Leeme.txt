@@ -1,0 +1,4 @@
+Codigo php
+Los archivos donde se encuentra el codigo fuente relevenate se encuentra en la carpeta controller, el nombre del archivo es IndexController
+Codigo javascript
+El archivo con las peticiones javascript se encuentra en la carpeta public/js, el nombre del archivo es globals.js
